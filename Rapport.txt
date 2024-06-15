@@ -1,0 +1,92 @@
+RAPPORT DE PROJET
+PRESENTER PAR LE GROUPE 11
+
+
+1.	INTRODUCTION 
+Dans le cadre de notre cours de notre cours de langage C, il nous a été demandé de réaliser des projets réunissant toutes les connaissances acquises au cours de l’apprentissage de ce langage. Alors pour ce faire plusieurs projets nous ont été proposés par nos encadreurs et pour notre part nous avons eu à en choisir un qui est le suivant : « GESTION DE BIBLIOTHEQUE » que nous allons présenter dans les lignes qui suivent.
+1.	 2. DÉVELOPPEMENT 
+2.	2.1. Présentation 
+Le projet : « GESTION DE BIBLIOTHEQUE »  
+:
+1.	Ouverture du fichier :
+○	La fonction commence par demander à l'utilisateur de saisir le nom du fichier contenant les informations sur les étudiants.
+○	Elle tente ensuite d'ouvrir ce fichier en mode lecture ("r").
+○	Si le fichier n'est pas trouvé, elle invite l'utilisateur à fournir un chemin absolu jusqu'à ce qu'un fichier valide soit ouvert.
+2.	Traitement des lignes du fichier :
+○	La boucle principale de la fonction lit chaque ligne du fichier à l'aide de fgets.
+○	Elle découpe la ligne en morceaux (tokens) en utilisant l'espace comme délimiteur grâce à la fonction strtok.
+○	Le premier token est converti en entier (MC) et stocké dans la structure etudiant.
+○	Le deuxième token (qui semble représenter le type d'adhésion) est également extrait, mais actuellement, il est commenté dans le code.
+3.	Création de la liste chaînée d'étudiants :
+○	Si la liste est vide (pointeur P est NULL), un nouveau nœud est alloué pour stocker les informations de l'étudiant et P pointe vers ce nœud.
+○	Sinon, un nouveau nœud est créé et ajouté à la fin de la liste (pointeur P1).
+○	Les informations de l'étudiant sont stockées dans le champ VAL2 du nœud, et le pointeur Suive est mis à jour pour pointer vers le nouveau nœud.
+4.	Retour de la liste :
+○	Une fois que toutes les lignes du fichier ont été traitées, la fonction renvoie le pointeur P, qui pointe vers le début de la liste chaînée d'étudiants.
+○	CAPTURE DU CODE
+●	PlisteET CreerFIFOET() {
+●	    PlisteET P = NULL, P1;
+●	    etudiant x;
+●	    int i, n, j, nbr = 0;
+●	    char chaine[100 + 1];
+●	    char tmp1[] = " ";
+●	    char s[50];
+●	
+●	    // Remplacez "les_etudiants.txt" par le chemin absolu de votre fichier
+●	    FILE* fichier = fopen("les_etudiants.txt", "r");
+●	    if (fichier == NULL) {
+●	        printf("Erreur lors de l'ouverture du fichier.\n");
+●	        return NULL;
+●	    }
+●	
+●	    rewind(fichier);
+●	    while (!feof(fichier)) {
+●	        fgets(chaine, 100, fichier);
+●	        i = 0;
+●	        n = strlen(chaine);
+●	        if (chaine[n - 1] == '\n') {
+●	            chaine[n - 1] = '\0';
+●	        }
+●	        char* token = strtok(chaine, tmp1);
+●	
+●	        while (token != NULL) {
+●	            switch (i) {
+●	                case 0:
+●	                    strcpy(s, token);
+●	                    j = 0;
+●	                    while (s[j] != '\0') {
+●	                        nbr = nbr * 10 + (int)s[j] - 48;
+●	                        j++;
+●	                    }
+●	                    x.MC = nbr;
+●	                    nbr = 0;
+●	                    x.PT = 0;
+●	                    break;
+●	                case 1:
+●	                    strcpy(s, token);
+●	                    // Si nécessaire, ajoutez ici la logique pour le type d'adhésion (TA)
+●	                    break;
+●	            }
+●	            token = strtok(NULL, tmp1);
+●	            i++;
+●	        }
+●	
+●	        if (P == NULL) {
+●	            P = (PlisteET)malloc(sizeof(Cellule2));
+●	            P->VAL2 = x;
+●	            P->Suive = NULL;
+●	            P1 = P;
+●	        } else {
+●	            P1->Suive = (PlisteET)malloc(sizeof(Cellule2));
+●	            P1 = P1->Suive;
+●	            P1->VAL2 = x;
+●	            P1->Suive = NULL;
+●	        }
+●	    }
+●	    fclose(fichier);
+●	    return P;
+●	}
+●	CONCLUSION
+●	Pour le chemin absolu que vous devez spécifier pour "les_etudiants.txt", cela dépend de l'emplacement où se trouve votre fichier texte contenant les informations sur les étudiants. Vous devez fournir le chemin complet vers le fichier, y compris le nom du fichier lui-même. Par exemple, si le fichier "les_etudiants.txt" est dans le même répertoire que votre programme, vous pouvez simplement spécifier "les_etudiants.txt" comme le chemin. Si le fichier est dans un répertoire différent, vous devez spécifier le chemin complet, comme "C:\\Chemin\\Vers\\Votre\\Dossier\\les_etudiants.txt" pour Windows ou "/Chemin/Vers/Votre/Dossier/les_etudiants.txt" pour Linux/macOS.
+●	Assurez-vous que le fichier existe à l'emplacement spécifié et qu'il contient les données d'étudiants au format attendu par votre programme. Si vous rencontrez des problèmes, vérifiez également les autorisations d'accès au fichier.
+
